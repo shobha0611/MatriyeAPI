@@ -1,6 +1,7 @@
 import User from "../../schema/users.js";
 
 const updateUser = async (req, res) => {
+  console.log("calllllllll");
   const body = req.body;
 
   if (!body) {
@@ -10,30 +11,28 @@ const updateUser = async (req, res) => {
     });
   }
 
-  User.findOne({ _id: req.params.id }, (err, user) => {
-    if (err) {
-      return res.status(404).json({
-        err,
-        message: "Movie not found!",
-      });
-    }
-    user = body;
-    user
-      .save()
-      .then(() => {
-        return res.status(200).json({
-          success: true,
-          id: user._id,
-          message: "User updated!",
-        });
-      })
-      .catch((error) => {
-        return res.status(404).json({
-          error,
-          message: "User not updated!",
-        });
-      });
+  const user = await User.findOne({ _id: req.params.id }).catch((err) => {
+    console.log(err);
+    return res.status(404).json({
+      err,
+      message: "User not found!",
+    });
   });
+  if (user) {
+    Object.assign(user, body);
+    await user.save().catch((error) => {
+      return res.status(404).json({
+        error,
+        message: "User not updated!",
+      });
+    });
+
+    return res.status(201).json({
+      success: true,
+      id: user._id,
+      message: "User updated!",
+    });
+  }
 };
 
 export default updateUser;
