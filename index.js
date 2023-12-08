@@ -1,19 +1,17 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import router from "./app/routes.js";
+import database from "./db/index.js";
+
 const app = express();
 const apiPort = 5001;
-const db = require("./db");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
-const routers = require("./app/routes");
+database.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-app.use("/api", routers);
+app.use("/api", router);
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));

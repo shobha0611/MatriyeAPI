@@ -1,6 +1,6 @@
-const User = require("../../schema/users");
+import User from "../../schema/users.js";
 
-updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   const body = req.body;
 
   if (!body) {
@@ -36,5 +36,4 @@ updateUser = async (req, res) => {
   });
 };
 
-module.exports = updateUser;
-
+export default updateUser;

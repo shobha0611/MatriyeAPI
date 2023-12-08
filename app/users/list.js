@@ -1,11 +1,12 @@
-const User = require("../../schema/users");
-getAllUsersList = async (req, res) => {
+import User from "../../schema/users.js";
+
+const getAllUsersList = async (req, res) => {
   try {
     const users = await User.find({});
-    return res.status(200).json({ success: true, data: users });
+    return res.status(200).json({ success: true, results: users });
   } catch {
     (err) => console.log(err);
   }
 };
 
-module.exports = getAllUsersList;
+export default getAllUsersList;

@@ -1,10 +1,10 @@
-const express = require("express");
+import express from "express";
 
-const createUser = require("./users/create");
-const getAllUsersList = require("./users/list");
-const updateUser = require("./users/update");
-const getUserById = require("./users/getById");
-const deleteUser = require("./users/delete");
+import createUser from "./users/create.js";
+import getAllUsersList from "./users/list.js";
+import updateUser from "./users/update.js";
+import getUserById from "./users/getById.js";
+import deleteUser from "./users/delete.js";
 
 const router = express.Router();
 
@@ -14,4 +14,4 @@ router.get("/user/update:id", updateUser);
 router.post("/user/fetch/:id", getUserById);
 router.delete("/user/delete/:id", deleteUser);
 
-module.exports = router;
+export default router;
